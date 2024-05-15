@@ -1,15 +1,12 @@
 package com.api.crud.services;
 
-import com.api.crud.models.Producto;
 import com.api.crud.models.Subasta;
-import com.api.crud.repositories.ProductoRepository;
 import com.api.crud.repositories.SubastaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +17,12 @@ public class SubastaService {
 
     @Autowired
     SubastaRepository subastaRepository;
-    public void save(Subasta subasta) {
+    public Subasta save(Subasta subasta) {
 
         if (subastaRepository.findByNombre(subasta.getNombre()).isPresent()) {
             throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "Existe una subasta con el mismo nombre.");
         }
-        subastaRepository.save(subasta);
+        return subastaRepository.save(subasta);
     }
 
     public void delete(Integer id) {
@@ -38,7 +35,7 @@ public class SubastaService {
     }
 
     public void update(Subasta subasta) {
-        if (subastaRepository.findById(subasta.getId()) == null) {
+        if (subastaRepository.findById(subasta.getId()).isEmpty()) {
             throw new HttpServerErrorException(HttpStatus.BAD_REQUEST, "No existe una subasta con ese identificador.");
         }
         subastaRepository.save(subasta);
