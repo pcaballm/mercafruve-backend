@@ -119,8 +119,8 @@ public class SubastaController {
     }
 
     @GetMapping("/obtenerTodos/logSubasta")
-    public ResponseEntity<List<LogSubasta>> obtenerTodosLogSubasta() {
-        return new ResponseEntity<>(logSubastaService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<LogSubasta>> obtenerTodosLogSubasta(@RequestParam Long id) {
+        return new ResponseEntity<>(logSubastaService.findAllById(id), HttpStatus.OK);
     }
 
 }
