@@ -19,7 +19,9 @@ public class JwtService {
 
     private static final String SECRET_KEY = "SECRET25329876502394921368750982137540971826578645987236";
     public String getToken(UserDetails userDetails) {
-        return getToken(new HashMap<>(), userDetails);
+        Map<String, Object> map = new HashMap<>();
+        map.put("Rol", userDetails.getAuthorities());
+        return getToken(map, userDetails);
     }
 
     private String getToken(Map<String, Object> extraClaims, UserDetails userDetails) {
